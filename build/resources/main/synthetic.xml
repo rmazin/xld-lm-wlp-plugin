@@ -1,0 +1,35 @@
+<synthetic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.xebialabs.com/deployit/synthetic" xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd">
+
+    <!-- ==================================== xml_import ==================================== -->
+    <type type="lmwlp.IncludedXml" extends="udm.BaseDeployedArtifact" deployable-type="lmwlp.includedXmlSpec" container-type="wlp.Server" description="External xml-file included in Liberty server.xml">
+        <generate-deployable type="lmwlp.includedXmlSpec" extends="generic.File" description="Was LP importable xml file" />
+        <!-- template options -->
+        <property name="optional" label="config file is optional" default="true" kind="boolean" description="server will start even if this xml file is not present" />
+        <property name="rank" kind="integer" required ="true" default="0" label="include ordering rank" description="the rank this file has in the include file order"/>
+        <!-- hidden properties -->
+        <property name="location" kind="string" hidden="true" required="false" />
+        <property name="onConflict" kind="string" hidden="true" default="Replace" />
+        <property name="installFeatures" kind="boolean" hidden="true" default="true" />
+        <!-- xml settings: these will be used to formulate the line to be added to the server xml -->
+        <property name="propertyMappingElementName" hidden="true" default="include" />
+        <property name="propertyMapping" hidden="true" kind="map_string_string" default="id:name,location:,optional:,onConflict:" />
+    </type>
+
+    <type-modification type="wlp.Server" >
+        <property name="rebootServer" category="Liberty Mutual" kind="boolean" default="false" description="should the container be rebooted after changes where made to it" />
+        <property name="useConfigLocking" category="Liberty Mutual" kind="boolean" default="true" description="use the Liberty Mutual Liberty Profile config Locking Mechanism" />
+        <property name="lockScript" category="Liberty Mutual" kind="string" default="/util/mware/was/changepermsWASLP.sh" hidden="true"/>
+        <property name="unLockScript" category="Liberty Mutual" kind="string" default="/util/mware/was/unlockWasConfig.sh" hidden="true"/>
+    </type-modification>
+
+    <type-modification type="wlp.EnterpriseApplication">
+        <property name="unpackZipFile" category="Liberty Mutual" kind="boolean" default="true" description="should the earfile be unzipped in the target directory? this options is to counter a bug in was lp" />
+    </type-modification>
+
+    <type type="lmwlp.configFile" extends="udm.BaseDeployedArtifact" deployable-type="lmwlp.configFileSpec" container-type="wlp.Server" description="websphere liberty profile config file">
+        <generate-deployable type="lmwlp.configFileSpec" extends="generic.File" description="Was LP importable xml file" />
+        <property name="targetPathShared" kind="string" default="True" />
+    </type>
+
+
+</synthetic>

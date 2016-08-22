@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<rules xmlns="http://www.xebialabs.com/xl-deploy/xl-rules">
+
+
+    <!-- ==================================== importable xml Artifacts ====================================-->
+
+    <rule name="lmwlp.IncludedXml.CREATE" scope="deployed">
+        <conditions>
+            <type>lmwlp.IncludedXml</type>
+            <operation>CREATE</operation>
+        </conditions>
+        <planning-script-path>lmwlp/scripts/configuration/plan-config-xml-deploy.py</planning-script-path>
+    </rule>
+    <rule name="lmwlp.IncludedXml.MODIFY" scope="deployed">
+        <conditions>
+            <type>lmwlp.IncludedXml</type>
+            <operation>MODIFY</operation>
+        </conditions>
+        <planning-script-path>lmwlp/scripts/configuration/plan-config-xml-mod.py</planning-script-path>
+    </rule>
+
+    <rule name="lmwlp.IncludedXml.DESTROY" scope="deployed">
+        <conditions>
+            <type>lmwlp.IncludedXml</type>
+            <operation>DESTROY</operation>
+        </conditions>
+        <planning-script-path>lmwlp/scripts/configuration/plan-config-xml-undeploy.py</planning-script-path>
+    </rule>
+
+    <rule name="lmwlp.configFile.CREATE_MODIFY" scope="deployed">
+        <conditions>
+            <type>lmwlp.configFile</type>
+            <operation>CREATE</operation>
+            <operation>MODIFY</operation>
+        </conditions>
+        <planning-script-path>lmwlp/scripts/configuration/plan-config-file-deploy.py</planning-script-path>
+    </rule>
+    <rule name="lmwlp.configFile.DESTROY" scope="deployed">
+        <conditions>
+            <type>lmwlp.configFile</type>
+            <operation>DESTROY</operation>
+        </conditions>
+        <planning-script-path>lmwlp/scripts/configuration/plan-config-file-undeploy.py</planning-script-path>
+    </rule>
+
+    <!-- unpacking them ears bro -->
+    <rule name="lmwlp.EnterpriseApplication.CREATE_MODIFY" scope="deployed">
+        <conditions>
+            <type>wlp.EnterpriseApplication</type>
+            <operation>CREATE</operation>
+            <operation>MODIFY</operation>
+        </conditions>
+        <planning-script-path>lmwlp/scripts/application/plan-unpack-ear-create.py</planning-script-path>
+    </rule>
+    <rule name="lmwlp.EnterpriseApplication.DESTROY" scope="deployed">
+        <conditions>
+            <type>wlp.EnterpriseApplication</type>
+            <operation>DESTROY</operation>
+            <operation>MODIFY</operation>
+        </conditions>
+        <planning-script-path>lmwlp/scripts/application/plan-unpack-ear-destroy.py</planning-script-path>
+    </rule>
+    <!-- done unpacking them ears bro -->
+
+    <rule name="wlp.Configuration.REBOOT" scope="plan">
+        <planning-script-path>lmwlp/scripts/container/plan-container-reboot.py</planning-script-path>
+    </rule>
+    <rule name="wlp.Configuration.CONFIG_LOCK" scope="plan">
+        <planning-script-path>lmwlp/scripts/container/plan-container-locking.py</planning-script-path>
+    </rule>
+    <rule name="lmwlp.IncludedXml.CREATE_MODIFY.featuresChanged" scope="plan">
+       <planning-script-path>lmwlp/scripts/configuration/plan-config-feature-update.py</planning-script-path>
+   </rule>
+
+</rules>
